@@ -22,7 +22,7 @@ Then, memory leak check results will print to stderr when the program exits ([at
 #include	<stdio.h>
 #include	"memcheck.h"
 
-void f() {
+void foo() {
 	char* c = (char*)malloc(10);
 	char* d = (char*)realloc(c, 15);
 }
@@ -32,7 +32,8 @@ int main() {
 
 	int* a = (int*)malloc(sizeof(int));
 	float* b = (float*)calloc(5, sizeof(float));
-	f();
+	foo();
+	free(a);
 
 	return 0;
 }
@@ -49,7 +50,6 @@ Output:
 
 ```plaintext
 Memory leaks:
-  15 bytes at 0x0000000000A814C0 (allocate from .\test.c:6 in f)
-  20 bytes at 0x0000000000A81460 (allocate from .\test.c:13 in main)
-  4 bytes at 0x0000000000A81400 (allocate from .\test.c:12 in main)
+  15 bytes at 0x0000000000A914E0 (allocate from test.c:6 in foo)
+  20 bytes at 0x0000000000A91480 (allocate from test.c:13 in main)
 ```

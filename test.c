@@ -1,7 +1,7 @@
 #include	<stdio.h>
 #include	"memcheck.h"
 
-void f() {
+void foo() {
 	char* c = (char*)malloc(10);
 	char* d = (char*)realloc(c, 15);
 }
@@ -11,7 +11,8 @@ int main() {
 
 	int* a = (int*)malloc(sizeof(int));
 	float* b = (float*)calloc(5, sizeof(float));
-	f();
+	foo();
+	free(a);
 
 	return 0;
 }
